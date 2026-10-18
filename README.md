@@ -16,7 +16,7 @@ formatSats(16129);             // "16 129 sats"
 t("fr", "welcome", { name: "Awa" }); // "Bienvenue, Awa !"
 ```
 
-### Payout example (Node 20+)
+### Show a payout (Node 20+)
 
 Save this as `payout-example.js` in the repository root, then run `node payout-example.js`:
 
