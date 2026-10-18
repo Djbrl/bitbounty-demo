@@ -6,7 +6,7 @@ export const SATS_PER_BTC = 100_000_000;
 export function groupThousands(n) {
   if (!Number.isInteger(n)) throw new TypeError(`expected a whole number, got ${n}`);
   const sign = n < 0 ? "-" : "";
-  return sign + String(Math.abs(n)).replace(/\B(?=(\d{3})+(?!\d))/, " ");
+  return sign + String(Math.abs(n)).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 }
 
 /** 25000 → "25 000 FCFA". FCFA has no cents: amounts are whole numbers. */

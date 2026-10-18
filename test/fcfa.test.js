@@ -6,10 +6,13 @@ test("formats FCFA amounts with a space between thousands", () => {
   assert.equal(formatXof(500), "500 FCFA");
   assert.equal(formatXof(5000), "5 000 FCFA");
   assert.equal(formatXof(25000), "25 000 FCFA");
+  assert.equal(formatXof(1500000), "1 500 000 FCFA");
+  assert.equal(formatXof(1000000000), "1 000 000 000 FCFA");
 });
 
 test("formats sats", () => {
   assert.equal(formatSats(16129), "16 129 sats");
+  assert.equal(formatSats(12345678), "12 345 678 sats");
 });
 
 test("keeps the sign of negative amounts", () => {
