@@ -16,6 +16,23 @@ formatSats(16129);             // "16 129 sats"
 t("fr", "welcome", { name: "Awa" }); // "Bienvenue, Awa !"
 ```
 
+### Show a payout (Node 20+)
+
+Save this as `payout-example.js` in the repository root, then run `node payout-example.js`:
+
+```js
+import { formatSats, formatXof, xofToSats } from "./src/fcfa.js";
+
+const payoutXof = 10_000;
+const exampleXofPerBtc = 62_000_000;
+const payoutSats = xofToSats(payoutXof, exampleXofPerBtc);
+
+console.log(`Payout: ${formatSats(payoutSats)} (${formatXof(payoutXof)})`);
+// Payout: 16 129 sats (10 000 FCFA)
+```
+
+`exampleXofPerBtc` is a fictional fixed example rate in FCFA per 1 BTC. It is not fetched from, or intended to represent, a live exchange-rate source.
+
 ## Test
 ```sh
 npm test   # node --test, nothing to install
