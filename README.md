@@ -16,6 +16,11 @@ formatSats(16129);             // "16 129 sats"
 t("fr", "welcome", { name: "Awa" }); // "Bienvenue, Awa !"
 ```
 
+Conversion rates are finite positive numbers in **FCFA per bitcoin**. Both
+`xofToSats` and `satsToXof` throw a `RangeError` that includes the supplied rate
+when it is missing, nonnumeric, nonfinite, zero or negative. Numeric strings are
+not coerced to numbers. Valid-rate conversion and rounding remain unchanged.
+
 ## Test
 ```sh
 npm test   # node --test, nothing to install
