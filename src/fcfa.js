@@ -19,12 +19,20 @@ export function formatSats(sats) {
   return `${groupThousands(sats)} sats`;
 }
 
-/** FCFA → sats at a rate given in FCFA per bitcoin, rounded to the nearest sat. */
+function assertValidRate(xofPerBtc) {
+  if (!Number.isFinite(xofPerBtc) || xofPerBtc <= 0) {
+    throw new RangeError(`expected a finite positive FCFA per bitcoin rate, got ${String(xofPerBtc)}`);
+  }
+}
+
+/** FCFA → sats, rounded to the nearest sat. Throws RangeError for an invalid rate. */
 export function xofToSats(xof, xofPerBtc) {
+  assertValidRate(xofPerBtc);
   return Math.round((xof * SATS_PER_BTC) / xofPerBtc);
 }
 
-/** sats → FCFA at a rate given in FCFA per bitcoin, rounded to the nearest franc. */
+/** sats → FCFA, rounded to the nearest franc. Throws RangeError for an invalid rate. */
 export function satsToXof(sats, xofPerBtc) {
+  assertValidRate(xofPerBtc);
   return Math.round((sats * xofPerBtc) / SATS_PER_BTC);
 }

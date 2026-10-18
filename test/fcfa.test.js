@@ -25,3 +25,27 @@ test("converts FCFA to sats and back", () => {
   assert.equal(xofToSats(10000, rate), 16129);
   assert.equal(satsToXof(16129, rate), 10000);
 });
+
+for (const convert of [xofToSats, satsToXof]) {
+  test(`${convert.name} rejects missing, nonnumeric and nonpositive rates`, () => {
+    const invalidRates = [undefined, null, NaN, Infinity, -Infinity, 0, -0, -1,
+      "62000000", "invalid", true, {}, 1n, Symbol("rate")];
+    for (const rate of invalidRates) {
+      assert.throws(() => convert(10000, rate), (error) => {
+        assert.ok(error instanceof RangeError, `rate: ${String(rate)}`);
+        assert.ok(error.message.includes(String(rate)), error.message);
+        return true;
+      });
+    }
+    assert.throws(() => convert(10000), RangeError);
+  });
+}
+
+test("valid finite rates retain conversion and rounding behavior", () => {
+  assert.equal(xofToSats(1, 62_000_000), 2);
+  assert.equal(satsToXof(1, 62_000_000), 1);
+  assert.equal(xofToSats(0, 62_000_000), 0);
+  assert.equal(satsToXof(0, 62_000_000), 0);
+  assert.equal(xofToSats(1, 62_500_000.5), 2);
+  assert.equal(satsToXof(3, 62_500_000.5), 2);
+});
