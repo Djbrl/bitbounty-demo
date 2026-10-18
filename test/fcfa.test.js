@@ -49,3 +49,18 @@ test("valid finite rates retain conversion and rounding behavior", () => {
   assert.equal(xofToSats(1, 62_500_000.5), 2);
   assert.equal(satsToXof(3, 62_500_000.5), 2);
 });
+
+test("unprintable invalid rates still produce a RangeError", () => {
+  const unprintableRates = [Object.create(null), {
+    toString() { throw new Error("cannot stringify"); }
+  }];
+  for (const convert of [xofToSats, satsToXof]) {
+    for (const rate of unprintableRates) {
+      assert.throws(() => convert(10000, rate), (error) => {
+        assert.ok(error instanceof RangeError);
+        assert.match(error.message, /object/);
+        return true;
+      });
+    }
+  }
+});

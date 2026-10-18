@@ -19,9 +19,16 @@ export function formatSats(sats) {
   return `${groupThousands(sats)} sats`;
 }
 
+/** Reject invalid FCFA-per-bitcoin rates, even when they cannot be stringified. */
 function assertValidRate(xofPerBtc) {
   if (!Number.isFinite(xofPerBtc) || xofPerBtc <= 0) {
-    throw new RangeError(`expected a finite positive FCFA per bitcoin rate, got ${String(xofPerBtc)}`);
+    let description;
+    try {
+      description = String(xofPerBtc);
+    } catch {
+      description = `<unprintable ${typeof xofPerBtc}>`;
+    }
+    throw new RangeError(`expected a finite positive FCFA per bitcoin rate, got ${description}`);
   }
 }
 
