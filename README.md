@@ -16,7 +16,26 @@ formatSats(16129);             // "16 129 sats"
 t("fr", "welcome", { name: "Awa" }); // "Bienvenue, Awa !"
 ```
 
+## Show a payout
+
+This example shows how to display a payout amount in both FCFA and sats.
+
+The rate is the current BTC price in **FCFA per bitcoin**. You can get it from a price API (for example, CoinGecko or Bitnob) or from your own exchange rate source.
+
+```js
+// payout-example.js
+import { formatXof, formatSats, xofToSats } from "./src/fcfa.js";
+
+const rate = 62_000_000; // FCFA per bitcoin (example rate)
+const amountXof = 10_000; // amount received in FCFA
+
+const sats = xofToSats(amountXof, rate);
+console.log(`You received ${formatSats(sats)} (${formatXof(amountXof)})`);
+// Output: You received 16 129 sats (10 000 FCFA)
+```
+
 ## Test
+
 ```sh
 npm test   # node --test, nothing to install
 ```
